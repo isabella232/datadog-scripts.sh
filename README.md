@@ -6,6 +6,14 @@ curl -L https://github.com/notonthehighstreet/datadog-monitors.sh/raw/master/dat
 && chmod +x /usr/local/bin/datadog-monitors.sh
 ```
 
+# Example
+
+```
+export DATADOG_API_KEY=...
+export DATADOG_APP_KEY=...
+datadog‐monitors.sh ‐‐download "service:notonthehighstreet" ‐‐output‐dir monitors
+```
+
 # Documenation
 
 ```
