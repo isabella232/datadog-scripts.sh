@@ -1,3 +1,11 @@
+# Prerequisites
+
+The scripts use `jq` to parse and manipulate the JSON content sent from/to the API.
+
+```
+brew install jq
+```
+
 # Installation
 
 ```
