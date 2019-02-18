@@ -152,7 +152,6 @@ case "$action" in
 
       if [ -f "$local_file" ]; then
         local_md5=$(monitor_md5 "$local_file")
-        local_mdate=$(date -r "$local_file" "+%Y-%m-%d %H:%M:%S")
 
         if [ "$remote_md5" != "$local_md5" ]; then
           #
