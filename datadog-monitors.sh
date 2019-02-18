@@ -69,7 +69,7 @@ function curl_monitor {
 }
 
 function monitor_md5 {
-  jq '{ id: .id, name: .name, type: .type, query: .query, message: .message, tags: .tags, options: .options }' "$1" | openssl md5
+  jq 'del(.modified)' "$1" | openssl md5
 }
 
 function monitor_id {
