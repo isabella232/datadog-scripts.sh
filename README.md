@@ -1,3 +1,12 @@
+# Installation
+
+```
+curl -L https://github.com/notonthehighstreet/datadog-monitors.sh/raw/master/datadog-monitors.sh > /usr/local/bin/datadog-monitors.sh
+chmod +x /usr/local/bin/datadog-monitors.sh
+```
+
+# Documenation
+
 ```
 datadog‐monitors.sh(1)                                  datadog‐monitors.sh(1)
 
