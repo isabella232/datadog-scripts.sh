@@ -9,13 +9,13 @@ brew install jq
 # Installation
 
 ```
-curl -L https://github.com/notonthehighstreet/datadog-monitors.sh/raw/master/datadog-monitors.sh \
+curl -L https://github.com/notonthehighstreet/datadog-scripts.sh/raw/master/datadog-monitors.sh \
 > /usr/local/bin/datadog-monitors.sh \
 && chmod +x /usr/local/bin/datadog-monitors.sh
 ```
 
 ```
-curl -L https://github.com/notonthehighstreet/datadog-monitors.sh/raw/master/datadog-dashboards.sh \
+curl -L https://github.com/notonthehighstreet/datadog-scripts.sh/raw/master/datadog-dashboards.sh \
 > /usr/local/bin/datadog-dashboards.sh \
 && chmod +x /usr/local/bin/datadog-dashboards.sh
 ```
