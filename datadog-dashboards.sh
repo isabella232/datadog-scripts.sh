@@ -130,8 +130,8 @@ while (( "$#" )); do
       # get a list of id & names of the monitors to download
       action="download"
       url="$2"
-      board_type=$(echo "$url" | sed -E 's$https://app.datadoghq.com/(screen|dashboard)/([^/]+)/.+$\1$')
-      board_id=$(echo "$url"   | sed -E 's$https://app.datadoghq.com/(screen|dashboard)/([^/]+)/.+$\2$')
+      board_type=$(echo "$url" | sed -E 's$https://app.datadoghq.com/(screen|dash)/([^/]+)/.+$\1$')
+      board_id=$(echo "$url"   | sed -E 's$https://app.datadoghq.com/(screen|dash)/([^/]+)/.+$\2$')
       if [ -z "$board_type" -o -z "$board_id" ]; then
         echo "[`basename $0`] Error: Unrecognised URL" >&2
         exit 1
@@ -143,12 +143,14 @@ while (( "$#" )); do
       action="download"
       board_type="screen"
       board_id=$2
+      boards="${board_id} ${board_type}"
       shift 2
       ;;
     --download-timeboard)
       action="download"
       board_type="dash"
       board_id=$2
+      boards="${board_id} ${board_type}"
       shift 2
       ;;
     --download-list)
@@ -221,11 +223,13 @@ case "$action" in
           # the local copy is different from Datadog monitor
           #
           if [ "$always_overwrite" = "n" ]; then
+            echo ""
             echo "Board changed \"$board_name\""
             echo "Last Modified at $remote_mdate"
+            echo ""
             diff "$local_file" $remote_file
-            read -p "Overwite local copy ? (y/n) [y] " overwrite
-            overwrite=${overwrite:-y}
+            read -p "Overwite local copy ? (y/n) [n] " overwrite
+            overwrite=${overwrite:-n}
           fi
           if [ "$always_overwrite" = "y" -o "$overwrite" = "y" ]; then
             cp $remote_file "$local_file" && \
@@ -265,11 +269,13 @@ case "$action" in
 
           if [ "$remote_md5" != "$local_md5" ]; then
             if [ "$always_overwrite" = "n" ]; then
+              echo ""
               echo "Dashboard changed \"$remote_name\""
               echo "Last Modified at $remote_mdate"
+              echo ""
               diff $remote_file "$local_file"
-              read -p "Update Datadog dashboard ? (y/n) [y] " overwrite
-              overwrite=${overwrite:-y}
+              read -p "Update Datadog dashboard ? (y/n) [n] " overwrite
+              overwrite=${overwrite:-n}
             fi
             if [ "$always_overwrite" = "y" -o "$overwrite" = "y" ]; then
               curl --silent --verbose -X PUT -H "Content-type: application/json" -d "@$local_file" "https://api.datadoghq.com/api/v1/${board_type}/${board_id}?api_key=${api_key}&application_key=${app_key}" 2>&1 \

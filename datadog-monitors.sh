@@ -83,6 +83,10 @@ function monitor_mdate {
   jq -r '.modified' "$1" | cut -c1-19 | sed 's/T/ /'
 }
 
+function bold {
+  echo $(tput bold)${1}$(tput sgr0)
+}
+
 while (( "$#" )); do
   case "$1" in
     -h|--help)
@@ -157,11 +161,13 @@ case "$action" in
           # the local copy is different from Datadog monitor
           #
           if [ "$always_overwrite" = "n" ]; then
-            echo "Monitor changed \"$remote_name\""
+            echo ""
+            bold "Monitor changed \"$remote_name\""
             echo "Last Modified at $remote_mdate"
             diff "$local_file" $remote_file
-            read -p "Overwite local copy ? (y/n) [y] " overwrite
-            overwrite=${overwrite:-y}
+            echo ""
+            read -p "Overwite local copy ? (y/n) [n] " overwrite
+            overwrite=${overwrite:-n}
           fi
           if [ "$always_overwrite" = "y" -o "$overwrite" = "y" ]; then
             cp $remote_file "$local_file" && \
@@ -200,11 +206,13 @@ case "$action" in
 
         if [ "$remote_md5" != "$local_md5" ]; then
           if [ "$always_overwrite" = "n" ]; then
-            echo "Monitor changed \"$remote_name\""
+            echo ""
+            bold "Monitor changed \"$remote_name\""
             echo "Last Modified at $remote_mdate"
             diff $remote_file "$local_file"
-            read -p "Update Datadog monitor ? (y/n) [y] " overwrite
-            overwrite=${overwrite:-y}
+            echo ""
+            read -p "Update Datadog monitor ? (y/n) [n] " overwrite
+            overwrite=${overwrite:-n}
           fi
           if [ "$always_overwrite" = "y" -o "$overwrite" = "y" ]; then
             curl --silent --verbose -X PUT -H "Content-type: application/json" -d "@$local_file" "https://api.datadoghq.com/api/v1/monitor/${monitor_id}?api_key=${api_key}&application_key=${app_key}" 2>&1 \
