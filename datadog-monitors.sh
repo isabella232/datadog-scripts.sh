@@ -27,19 +27,18 @@ $(basename $0) [ --always ] --upload \fIfiles...
 Displays this page
 .TP
 -y|--always
-Always overwrite the monitor if it has been modified. When downloading, it will download
-all monitors that changed
+Always download or upload the monitors without asking for confirmation
 .TP
 --download QUERY
 Downloads the monitors matching the query passed in parameters and store
-them locally as JSON files in the current directory (which can be also specified using --dir)
+them locally as JSON files in the output directory (defaults to current directory)
 .TP
 --output-dir DIRECTORY
-Optional. To be used with --download. Stores downloaded monitors in the specified directory instead of current.
+Optional. Used with --download. Stores downloaded monitors in the specified directory
 .TP
 --upload \fIfiles...
 Uploads the monitors described by the JSON files passed in arguments.
-This will update monitors that have a valid 'id' and create monitors that don't have an 'id' attribute.
+This will update monitors that have a valid 'id' and create monitors that don't have an 'id' attribute
 .TP
 --api-key KEY
 The API key provided by Datadog (https://app.datadoghq.com/account/settings#api)
@@ -233,7 +232,7 @@ case "$action" in
           # new monitor created - update local copy
           #
           cp $remote_file "$local_file" && \
-          echo "Created monitor $local_file"
+          echo "Created $local_file"
         else
           echo "[Error] Failed to create $local_file"
           exit 1
