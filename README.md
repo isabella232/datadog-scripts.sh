@@ -20,12 +20,18 @@ curl -L https://github.com/notonthehighstreet/datadog-scripts.sh/raw/master/data
 && chmod +x /usr/local/bin/datadog-dashboards.sh
 ```
 
-# Example
+# Examples
 
 ```
 export DATADOG_API_KEY=...
 export DATADOG_APP_KEY=...
-datadog‐monitors.sh ‐‐download "service:notonthehighstreet" ‐‐output‐dir monitors
+
+datadog‐monitors.sh ‐‐download "service:notonthehighstreet" ‐‐output‐dir datadog/monitors
+datadog‐monitors.sh ‐‐upload datadog/monitors/*.json
+
+datadog-dashboards.sh --download https://app.datadoghq.com/dash/1064451/geolocator --output-dir datadog/dashboards
+datadog-dashboards.sh --download-list 1234 --output-dir datadog/dashboards
+datadog-dashboards.sh --upload datadog/dashboards/*.json
 ```
 
 # datadog-monitors.sh --help
